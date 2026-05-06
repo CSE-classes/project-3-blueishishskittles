@@ -76,7 +76,9 @@ void *sub_string(void *threadid) 	/*each process searches in the string with the
     int start = tid * nlocal;
     int end = start + nlocal;
 
-    int i, j, k;
+    int i;
+	int j;
+	int k;
     int count;
     int local_count = 0;
 
@@ -106,6 +108,7 @@ void *sub_string(void *threadid) 	/*each process searches in the string with the
             local_count++;
         }
     }
+	
     pthread_mutex_lock(&total_lock);
     total += local_count;
     pthread_mutex_unlock(&total_lock);
