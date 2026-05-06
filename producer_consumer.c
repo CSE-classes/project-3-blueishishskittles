@@ -6,7 +6,9 @@
 #define END_OF_STREAM '\0'
 
 char buffer[BUFFER_SIZE];
-int in = 0, out = 0, count = 0;
+int in = 0;
+out = 0;
+count = 0;
 
 pthread_mutex_t lock;
 pthread_cond_t not_full;
@@ -14,13 +16,16 @@ pthread_cond_t not_empty;
 
 FILE *fp;
 
-void *producer(void *arg) {
+void *producer(void *arg) 
+{
     int ch;
 
-    while ((ch = fgetc(fp)) != EOF) {
+    while ((ch = fgetc(fp)) != EOF) 
+    {
         pthread_mutex_lock(&lock);
 
-        while (count == BUFFER_SIZE) {
+        while (count == BUFFER_SIZE) 
+        {
             pthread_cond_wait(&not_full, &lock);
         }
 
@@ -33,7 +38,8 @@ void *producer(void *arg) {
     }
 
     pthread_mutex_lock(&lock);
-    while (count == BUFFER_SIZE) {
+    while (count == BUFFER_SIZE) 
+    {
         pthread_cond_wait(&not_full, &lock);
     }
 
@@ -47,13 +53,16 @@ void *producer(void *arg) {
     pthread_exit(NULL);
 }
 
-void *consumer(void *arg) {
+void *consumer(void *arg) 
+{
     char ch;
 
-    while (1) {
+    while (1) 
+    {
         pthread_mutex_lock(&lock);
 
-        while (count == 0) {
+        while (count == 0) 
+        {
             pthread_cond_wait(&not_empty, &lock);
         }
 
@@ -74,7 +83,8 @@ void *consumer(void *arg) {
     pthread_exit(NULL);
 }
 
-int main() {
+int main() 
+{
     pthread_t prod, cons;
 
     fp = fopen("message.txt", "r");
