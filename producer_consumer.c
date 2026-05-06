@@ -85,10 +85,12 @@ void *consumer(void *arg)
 
 int main() 
 {
-    pthread_t prod, cons;
+    pthread_t prod;
+    pthread_t cons;
 
     fp = fopen("message.txt", "r");
-    if (fp == NULL) {
+    if (fp == NULL) 
+    {
         printf("Error opening file\n");
         return -1;
     }
